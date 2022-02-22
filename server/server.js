@@ -18,7 +18,7 @@ async function startServer() {
        resolvers,
        context: authMiddleware
     });
-    await server.startsWith();
+    await server.start();
     // integrate Apoloo server with the express function as middleware
 }
 startServer();
