@@ -1,23 +1,49 @@
 // import user model
 const { User } = require('../models');
-const { AuthenticationError } = require('apollo-server-express');
+const { AuthenticationError, UserInputError } = require('apollo-server-express');
 // import sign token function from auth
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        
+        // find all users
+        users: async () => {
+            return User.find()
+        },
         //find a single user by id or username
+        user: async (parent, {username}) => {
+            const params = username ? { username } : {};
+            return User.findOne({params})
+        },
+        // git user name and password log in information
+        getMe: async(parent, args, context) => {
+        if (context.user) {
+            const userData = await UserInputError.findOne({_id:context.user._id})
+            .select('-__v -password')
+
+            return userData;
+        }
+        throw new AuthenticationError('Not logged in');
+        }
     },
     Mutation: {
         // create a user
+        addUser: async (parent, args) => {
+            const user = await User.create(args);
+            const token = signToken(user);
+            return { token, user };
+        }
         // login a user
+        loginUser: async (parent, {email,password}) => {
+            const user = awat.Userr.findOne({ email });
+        }
         // save a book to a users saved books
         // remove a book
     }
 }
+module.exports = resolvers;
 
-
+// below for reference
 module.exports = {
   // get a single user by either their id or their username
   async getSingleUser({ user = null, params }, res) {
@@ -87,4 +113,3 @@ module.exports = {
   },
 };
 
-module.exports = resolvers;

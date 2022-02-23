@@ -2,16 +2,18 @@ const express = require('express');
 //import Apollo Server
 const { ApolloServer} = require('apollo-server-express');
 
-const path = require('path');
+// import typeDefs and resolvers
+const { typeDefs, resolvers } = require('/schemas');
+//const path = require('path');
 const db = require('./config/connection');
-const routes = require('./routes');
+//const routes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const { authMiddleware } = require('./utils/auth');
 let server = "";
 
-//create a new Apollo Seriver and pass in schema data
+//create a new Apollo Server and pass in schema data
 async function startServer() {
     server = new ApolloServer({
        typeDefs,
@@ -21,6 +23,8 @@ async function startServer() {
     await server.start();
     // integrate Apoloo server with the express function as middleware
 }
+
+// Intialize Apollo Server
 startServer();
 
 app.use(express.urlencoded({ extended: true }));
