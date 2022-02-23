@@ -1,25 +1,46 @@
 // import the gql tagged template function
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 // create our typeDefs
 const typeDefs = gql`
-type User {
-    _id: ID
+  type User {
+    _id: ID!
     username: String!
-    email: String!
-}
-type Auth {
+    email: String
+    bookCount: Int
+    savedBooks: [Book]
+  }
+  type Book {
+    bookId: ID!
+    authors: [String]
+    description: String
+    title: String!
+    image: String
+    link: String
+  }
+  type Auth {
     token: ID!
     user: User
-}
-type Query {
+  }
+  type Query {
     me: User
- }
- type Mutation {
-     addUser(username:String!, email:String!):Auth
-     login(email: String!, email:String!, password:String!): Auth
- }
- `;
+  }
+  input BookInput {
+    authors: [String]
+    bookId: String!
+    description: String!
+    title: String!
+    image: String
+    link: String
+  }
+  type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    saveBook(bookdata: BookInput!):User
+    removeBook(bookId: ID!):User
+  }
+
+`;
 
 // export the typeDefs
 module.exports = typeDefs;
@@ -29,7 +50,7 @@ module.exports = typeDefs;
 // Mutation type
 // login : accepts and email and password as a returns and Auth Type- done
 // addUser: accepts a username, meail ans password, returns an auth type - done
-// saveBook: accepts a book author's array, description, title, bookID, image and link as paramters, returns User type (look into creating user type for all these paramters) 
+// saveBook: accepts a book author's array, description, title, bookID, image and link as paramters, returns User type (look into creating user type for all these paramters)
 //remove book: accepts a bookID and rerns a User type
 
 // User Type
@@ -39,9 +60,6 @@ module.exports = typeDefs;
 //bookCount
 //savedBooks (this will be an array of the Book type)
 
-
-
-
 // Book Tpye
 //  bookId (not the _id but the book's id value from Googles Book API)
 // authors (an array of strings as there may be more thans one author)
@@ -49,8 +67,6 @@ module.exports = typeDefs;
 // title
 // image
 // link
-
-
 
 // Authtype
 // token - done
