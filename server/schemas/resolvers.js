@@ -8,12 +8,14 @@ const resolvers = {
   Query: {
     // get user name and password log in information
     me: async (parent, args, context) => {
+      // if (context.user) {
+      //   const userData = await User.findOne({ _id: context.user._id })
+      //     .select('-__v -password')
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
-          .select('-__v -password')
-
-        return userData;
-      }
+        return User.findOne({ _id: context.user._id }).populate('savedBooks');
+      //   return userData;
+      
+    }
       throw new AuthenticationError('Not logged in');
     }
   },
