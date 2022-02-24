@@ -44,16 +44,16 @@ const SearchBooks = () => {
       }
 
       const { items } = await response.json();
-
+      console.log(items);
       const bookData = items.map((book) => ({
         bookId: book.id,
         authors: book.volumeInfo.authors || ['No author to display'],
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || '',
-        link: book.volumeInfo.selfLink
+        link: book.volumeInfo.canonicalVolumeLink
       }));
-
+      console.log(bookData);
       setSearchedBooks(bookData);
       setSearchInput('');
     } catch (err) {
@@ -130,6 +130,7 @@ const SearchBooks = () => {
                   <Card.Title>{book.title}</Card.Title>
                   <p className='small'>Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
+                  <a href= {book.link} target="_blank" rel="noopener noreferrer"> Click to buy the book</a>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}

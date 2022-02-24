@@ -1,6 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 // import user model
-const { User } = require("../models");
+const { User, Book } = require("../models");
 // import sign token function from auth
 const { signToken } = require("../utils/auth");
 
@@ -12,8 +12,8 @@ const resolvers = {
       //   const userData = await User.findOne({ _id: context.user._id })
       //     .select('-__v -password')
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('savedBooks');
-      //   return userData;
+        return User.findOne({ _id: context.user._id }).select();
+      //   return userData; 
       
     }
       throw new AuthenticationError('Not logged in');
@@ -40,11 +40,11 @@ const resolvers = {
       return { token, user };
     },
     // save a book to a users saved books
-     saveBook: async (parent, { bookdata }, context) =>{
+     saveBook: async (parent, { input }, context) =>{
        if (context.user) {
-         const updatedUser = await User.findByIdAndUpdate(
+         const updatedUser = await User.findOneAndUpdate(
            {_id: context.user._id},
-           {$push: {savedBooks: bookdata}},
+           {$push: {savedBooks: input}},
            {new:true}
          )
          return updatedUser;
