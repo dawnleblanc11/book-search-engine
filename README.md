@@ -2,8 +2,8 @@
 ![License:MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 # book-search-engine
 ### For many avid readers, keeping track of all the books you have read and those you still want to read can be difficult.  This tool allows you to search the Google API for books and save those that you want to read.  Future development will include a status to change to already read.  
-  ![screenshot](BookSearch1.png)
-  ![screenshot](BookSearch2.png)
+  ![screenshot](/server/assets/BookSearch1.png)
+  ![screenshot](/server/assets/BookSearch2.png)
 
   ## Installation/ Usage
   deployed application via Heroku https://dawnleblanc11.github.io/leblancportfolio/  
