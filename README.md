@@ -6,7 +6,7 @@
   ![screenshot](/server/assets/BookSearch2.png)
 
   ## Installation/ Usage
-  deployed application via Heroku https://dawnleblanc11.github.io/leblancportfolio/  
+  deployed application via Heroku https://enigmatic-badlands-02743.herokuapp.com/  
   Git Hub Repo: https://github.com/dawnleblanc11/book-search-engine
   
   ## Features
